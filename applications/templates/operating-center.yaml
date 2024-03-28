@@ -1,0 +1,27 @@
+{{ if has "operating-center" .Values.applications }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: operating-center
+  namespace: openshift-gitops
+spec:
+  project: crazy-train-demo
+  source:
+    repoURL: https://github.com/Demo-AI-Edge-Crazy-Train/gitops.git
+    targetRevision: main
+    path: operating-center
+    helm:
+      parameters: []
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: rail-operating-center
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=false
+    automated:
+      selfHeal: true
+      prune: true
+    managedNamespaceMetadata:
+      labels:
+        argocd.argoproj.io/managed-by: openshift-gitops
+{{ end }}

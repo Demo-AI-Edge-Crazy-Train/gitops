@@ -1,0 +1,12 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: rail-operating-center
+  labels:
+    kubernetes.io/metadata.name: rail-operating-center
+  annotations:
+    openshift.io/description: ''
+    openshift.io/display-name: 'Rail Operating Center'
+spec:
+  finalizers:
+    - kubernetes
