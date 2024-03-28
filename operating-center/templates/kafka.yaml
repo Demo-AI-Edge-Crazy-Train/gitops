@@ -64,3 +64,26 @@ kind: Secret
 metadata:
   name: train-user
 type: Opaque
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  labels:
+    strimzi.io/cluster: operating-center
+  name: kafdrop
+spec:
+  authentication:
+    password:
+      valueFrom:
+        secretKeyRef:
+          key: password
+          name: kafdrop-user
+    type: scram-sha-512
+---
+apiVersion: v1
+stringData:
+  password: R3dH4t1!
+kind: Secret
+metadata:
+  name: kafdrop-user
+type: Opaque

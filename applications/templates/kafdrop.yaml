@@ -6,28 +6,20 @@ metadata:
   namespace: openshift-gitops
 spec:
   project: crazy-train-demo
-  sources:
-  - repoURL: https://github.com/obsidiandynamics/kafdrop.git
-    targetRevision: "4.0.1"
-    path: chart
+  source:
+  - repoURL: https://github.com/Demo-AI-Edge-Crazy-Train/gitops.git
+    targetRevision: main
+    path: kafdrop/chart
     helm:
       valuesObject:
         kafka:
           brokerConnect: operating-center-kafka-bootstrap.operating-center.svc.cluster.local:9092
-        server:
-          servlet:
-            contextPath: /
-        jvm:
-          opts: "-Xms32M -Xmx64M"
+          configSecretName: kafdrop-kafka-config
         image:
           tag: "4.0.1"
-        service:
-          type: "ClusterIP"
-        nodeSelector:
-          kubernetes.io/arch: amd64
   - repoURL: https://github.com/Demo-AI-Edge-Crazy-Train/gitops.git
     targetRevision: main
-    path: kafdrop
+    path: kafdrop/custom
   destination:
     server: https://kubernetes.default.svc
     namespace: kafdrop
