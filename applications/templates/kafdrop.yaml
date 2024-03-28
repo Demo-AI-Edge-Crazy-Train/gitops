@@ -1,0 +1,33 @@
+{{ if has "kafdrop" .Values.applications }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kafdrop
+  namespace: openshift-gitops
+spec:
+  project: crazy-train-demo
+  source:
+    repoURL: https://github.com/obsidiandynamics/kafdrop.git
+    targetRevision: "4.0.1"
+    path: chart
+    helm:
+      parameters:
+      - name: kafka.brokerConnect
+        value: operating-center-kafka-bootstrap.operating-center.svc.cluster.local:9092
+      - name: server.servlet.contextPath
+        value: /
+      - name: jvm.opts
+        value: "-Xms32M -Xmx64M"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kafdrop
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true
+    managedNamespaceMetadata:
+      labels:
+        argocd.argoproj.io/managed-by: openshift-gitops
+{{ end }}
