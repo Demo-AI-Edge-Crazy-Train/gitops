@@ -16,3 +16,4 @@ spec:
     kind: '*'
   sourceRepos:
   - https://github.com/Demo-AI-Edge-Crazy-Train/gitops.git
+  - https://github.com/obsidiandynamics/kafdrop.git
