@@ -18,6 +18,7 @@ spec:
           propertiesFile: /etc/kafka/kafka.properties
         image:
           tag: "4.0.1"
+          pullPolicy: IfNotPresent
   - repoURL: https://github.com/Demo-AI-Edge-Crazy-Train/gitops.git
     targetRevision: main
     path: kafdrop/custom

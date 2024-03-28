@@ -18,14 +18,14 @@ kafka:
 host:
 
 jvm:
-  opts: ""
+  opts: "-Xms2048M -Xmx2048M"
 jmx:
   port: 8686
 
 nameOverride: ""
 fullnameOverride: ""
 
-cmdArgs: "-Xms2048M -Xmx2048M"
+cmdArgs: ""
 
 global:
   kubeVersion: ~
