@@ -18,6 +18,13 @@ spec:
         value: /
       - name: jvm.opts
         value: "-Xms32M -Xmx64M"
+      - name: image.tag
+        value: "4.0.1"
+      - name: service.type
+        value: "ClusterIP"
+      - name: nodeSelector
+        value:
+          kubernetes.io/arch: amd64
   destination:
     server: https://kubernetes.default.svc
     namespace: kafdrop
