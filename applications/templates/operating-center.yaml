@@ -10,8 +10,6 @@ spec:
     repoURL: https://github.com/Demo-AI-Edge-Crazy-Train/gitops.git
     targetRevision: main
     path: operating-center
-    helm:
-      parameters: []
   destination:
     server: https://kubernetes.default.svc
     namespace: operating-center
