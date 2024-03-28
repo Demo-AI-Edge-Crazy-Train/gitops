@@ -14,7 +14,7 @@ spec:
       parameters: []
   destination:
     server: https://kubernetes.default.svc
-    namespace: rail-operating-center
+    namespace: operating-center
   syncPolicy:
     syncOptions:
     - CreateNamespace=false
