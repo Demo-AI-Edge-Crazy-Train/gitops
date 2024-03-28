@@ -15,6 +15,7 @@ spec:
         kafka:
           brokerConnect: operating-center-kafka-bootstrap.operating-center.svc.cluster.local:9092
           configSecretName: kafdrop-kafka-config
+          propertiesFile: /etc/kafka/kafka.properties
         image:
           tag: "4.0.1"
   - repoURL: https://github.com/Demo-AI-Edge-Crazy-Train/gitops.git
