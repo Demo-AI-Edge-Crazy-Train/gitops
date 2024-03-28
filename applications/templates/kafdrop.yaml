@@ -6,8 +6,8 @@ metadata:
   namespace: openshift-gitops
 spec:
   project: crazy-train-demo
-  source:
-    repoURL: https://github.com/obsidiandynamics/kafdrop.git
+  sources:
+  - repoURL: https://github.com/obsidiandynamics/kafdrop.git
     targetRevision: "4.0.1"
     path: chart
     helm:
@@ -25,6 +25,9 @@ spec:
           type: "ClusterIP"
         nodeSelector:
           kubernetes.io/arch: amd64
+  - repoURL: https://github.com/Demo-AI-Edge-Crazy-Train/gitops.git
+    targetRevision: main
+    path: kafdrop
   destination:
     server: https://kubernetes.default.svc
     namespace: kafdrop
