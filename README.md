@@ -27,3 +27,8 @@ Give cluster-admin access rights to the **OpenShift Gitops** operator.
 oc adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:openshift-gitops:openshift-gitops-argocd-application-controller
 ```
 
+Create the app-of-app ArgoCD Application.
+
+```sh
+oc apply -f argocd.yaml
+```

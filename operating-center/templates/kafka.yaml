@@ -1,7 +1,7 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
-  name: rail-operating-center
+  name: operating-center
 spec:
   kafka:
     config:
@@ -46,7 +46,7 @@ apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
 metadata:
   labels:
-    strimzi.io/cluster: rail-operating-center
+    strimzi.io/cluster: operating-center
   name: train
 spec:
   authentication:

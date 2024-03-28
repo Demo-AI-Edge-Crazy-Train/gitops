@@ -4,6 +4,7 @@ metadata:
   name: crazy-train-demo
   namespace: openshift-gitops
 spec:
+  project: default
   source:
     repoURL: https://github.com/Demo-AI-Edge-Crazy-Train/gitops.git
     targetRevision: main

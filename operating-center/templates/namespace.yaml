@@ -1,9 +1,9 @@
 kind: Namespace
 apiVersion: v1
 metadata:
-  name: rail-operating-center
+  name: operating-center
   labels:
-    kubernetes.io/metadata.name: rail-operating-center
+    kubernetes.io/metadata.name: operating-center
   annotations:
     openshift.io/description: ''
     openshift.io/display-name: 'Rail Operating Center'
