@@ -11,6 +11,8 @@ spec:
       default.replication.factor: 3
       min.insync.replicas: 2
       inter.broker.protocol.version: '3.6.0'
+      replica.fetch.max.bytes: 3145728
+      message.max.bytes: 3145728
     storage:
       type: ephemeral
     listeners:
