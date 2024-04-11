@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ceq-app-env
+  namespace: {{ .Values.global.namespace | quote }}
+data:
+  BROKER_MQTT_URL: "tcp://mosquitto:1883"
+  KAFKA_BOOTSTRAP_SERVERS: {{ printf "%s:%d" .Values.kafkaBroker.bootstrapNode.hostname (.Values.kafkaBroker.bootstrapNode.port | int64) | quote }}
+  BROKER_KAFKA_URL: {{ printf "tcp://%s:%d" .Values.kafkaBroker.bootstrapNode.hostname (.Values.kafkaBroker.bootstrapNode.port | int64) | quote }}
+  MP_MESSAGING_CONNECTOR_SMALLRYE_KAFKA_SECURITY_PROTOCOL: "SASL_PLAINTEXT"
+  MP_MESSAGING_CONNECTOR_SMALLRYE_KAFKA_SASL_MECHANISM: "SCRAM-SHA-512"
+  MP_MESSAGING_CONNECTOR_SMALLRYE_KAFKA_SASL_JAAS_CONFIG: {{ printf "org.apache.kafka.common.security.scram.ScramLoginModule required username=%s password=%s;" (squote .Values.kafkaBroker.username) (squote .Values.kafkaBroker.password) | quote }}
+  MQTT_SRC_TOPIC_NAME: "train-model-result"
+  MQTT_DEST_TOPIC_NAM: "train-command"
+  KAFKA_TOPIC_NAME: "train-monitoring"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ceq-app
+    app.kubernetes.io/component: ceq-app
+    app.kubernetes.io/instance: ceq-app
+    app.kubernetes.io/name: ceq-app
+    app.kubernetes.io/part-of: train
+  name: ceq-app
+  namespace: {{ .Values.global.namespace | quote }}
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: ceq-app
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: ceq-app
+        deployment: ceq-app
+    spec:
+      containers:
+      - image: quay.io/mouachan/train-ceq-app-arm64:latest
+        imagePullPolicy: {{ .Values.ceqApp.image.pullPolicy | quote }}
+        name: ceq-app
+        envFrom:
+        - configMapRef:
+            name: ceq-app-env
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      serviceAccountName: train
+      serviceAccount: train
+      terminationGracePeriodSeconds: 30

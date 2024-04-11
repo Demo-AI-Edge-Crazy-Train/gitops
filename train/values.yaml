@@ -1,0 +1,39 @@
+kafkaBroker:
+  bootstrapNode:
+    hostname: ""
+    port: 9094
+  username: ""
+  password: ""
+
+global:
+  imageRegistry: ""
+  namespace: "train"
+
+mosquitto:
+  image:
+    registry: docker.io
+    repository: library/eclipse-mosquitto
+    tag: latest
+    digest: ""
+    pullPolicy: Always
+captureApp:
+  image:
+    registry: quay.io
+    repository: mouachan/train-capture-app-arm64
+    tag: latest
+    digest: ""
+    pullPolicy: Always
+intelligentTrain:
+  image:
+    registry: quay.io
+    repository: demo-ai-edge-crazy-train/intelligent-train
+    tag: jetson
+    digest: ""
+    pullPolicy: Always
+ceqApp:
+  image:
+    registry: quay.io
+    repository: mouachan/train-ceq-app-arm64
+    tag: latest
+    digest: ""
+    pullPolicy: Always
