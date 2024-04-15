@@ -28,3 +28,10 @@ Return the proper ceqApp image name
 {{ include "common.images.image" (dict "imageRoot" .Values.ceqApp.image "global" .Values.global) }}
 {{- end -}}
 
+{{/*
+Return the proper trainController image name
+*/}}
+{{- define "trainController.image" -}}
+{{ include "common.images.image" (dict "imageRoot" .Values.trainController.image "global" .Values.global) }}
+{{- end -}}
+

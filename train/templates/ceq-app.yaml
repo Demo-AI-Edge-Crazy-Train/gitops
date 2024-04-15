@@ -44,7 +44,7 @@ spec:
         deployment: ceq-app
     spec:
       containers:
-      - image: quay.io/mouachan/train-ceq-app-arm64:latest
+      - image: {{ template "ceqApp.image" . }}
         imagePullPolicy: {{ .Values.ceqApp.image.pullPolicy | quote }}
         name: ceq-app
         envFrom:

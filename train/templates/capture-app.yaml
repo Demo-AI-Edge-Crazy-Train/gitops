@@ -55,7 +55,7 @@ spec:
         deployment: capture-app
     spec:
       containers:
-      - image: quay.io/mouachan/train-capture-app-arm64:latest
+      - image: {{ template "captureApp.image" . }}
         imagePullPolicy: {{ .Values.captureApp.image.pullPolicy | quote }}
         name: capture-app
         envFrom:

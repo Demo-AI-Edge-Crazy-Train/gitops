@@ -56,7 +56,7 @@ spec:
         deployment: mosquitto
     spec:
       containers:
-      - image: docker.io/library/eclipse-mosquitto:latest
+      - image: {{ template "mosquitto.image" . }}
         imagePullPolicy: {{ .Values.mosquitto.image.pullPolicy | quote }}
         name: mosquitto
         ports:

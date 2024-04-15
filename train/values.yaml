@@ -37,3 +37,10 @@ ceqApp:
     tag: latest
     digest: ""
     pullPolicy: Always
+trainController:
+  image:
+    registry: quay.io
+    repository: mouachan/train-controller-arm64
+    tag: latest
+    digest: ""
+    pullPolicy: Always
