@@ -1,0 +1,94 @@
+version: '3.3'
+networks:
+  internal:
+services:
+  mosquitto:
+      user: "1883:1883"
+      image: docker.io/library/eclipse-mosquitto:latest
+      hostname: mosquitto
+      container_name: mosquitto
+      restart: unless-stopped
+      ports:
+        - "1883:1883"
+        - "9001:9001"
+      volumes:
+        - /tmp/broker/mosquitto/log:/mosquitto/log:z
+        - /tmp/broker/mosquitto/config:/mosquitto/config:z
+        - /tmp/broker/mosquitto/data:/mosquitto/data:z
+      networks:
+        - internal
+  train-capture-image-app:
+    platform: linux/arm64/v8
+    image: quay.io/mouachan/train-capture-app-arm64:latest
+    privileged: true
+    user: root
+    ports:
+      - 8082:8080
+    environment: 
+      - VIDEO_DEVICE_INDEX=0
+      - TMP_FOLDER=/tmp
+      - INTERVAL=100
+      - NB_IMAGE_SEC=10
+      - MQTT_BROKER=tcp://mosquitto:1883
+      - MQTT_TOPIC=train-image
+      - SAVE_IMAGE=false
+    volumes:
+      - /dev:/dev
+      - /tmp/crazy-images:/tmp/crazy-images:z
+    depends_on:
+      - mosquitto
+    networks:
+      - internal
+  intelligent-train:
+    platform: linux/arm64/v8
+    image: quay.io/demo-ai-edge-crazy-train/intelligent-train:jetson
+    privileged: true
+    devices:
+    - nvidia.com/gpu=all
+    security_opt:
+    - "label=disable"
+    ports:
+      - 8000:8000
+    environment:
+      - MQTT_BROKER=mosquitto
+      - MQTT_PORT=1883
+      - MQTT_TOPIC=train-image
+      - MQTT_PUB_TOPIC=train-model-result
+      - MODEL_PATH =models/model.onnx
+    depends_on:
+      - mosquitto
+    networks:
+      - internal
+  train-ceq-app:
+    platform: linux/arm64/v8
+    image: quay.io/mouachan/train-ceq-app-arm64:latest
+    environment:
+      - BROKER_MQTT_URL=tcp://mosquitto:1883
+      - KAFKA_BOOTSTRAP_SERVERS=ad5e42954277445eda13c6836e19f0d2-224423490.eu-west-3.elb.amazonaws.com:9094
+      - BROKER_KAFKA_URL=tcp://ad5e42954277445eda13c6836e19f0d2-224423490.eu-west-3.elb.amazonaws.com:9094
+      - MP_MESSAGING_CONNECTOR_SMALLRYE_KAFKA_SECURITY_PROTOCOL=SASL_PLAINTEXT
+      - MP_MESSAGING_CONNECTOR_SMALLRYE_KAFKA_SASL_MECHANISM=SCRAM-SHA-512
+      - MP_MESSAGING_CONNECTOR_SMALLRYE_KAFKA_SASL_JAAS_CONFIG="org.apache.kafka.common.security.scram.ScramLoginModule required username='train' password='R3dH4t1!';"
+      - MQTT_SRC_TOPIC_NAME=train-model-result
+      - MQTT_DEST_TOPIC_NAM=train-command
+      - KAFKA_TOPIC_NAME=train-monitoring
+    depends_on:
+      - mosquitto
+      - kafka
+    networks:
+      - internal
+  train-controller:
+    platform: linux/arm64/v8
+    image: quay.io/mouachan/train-controller-arm64:latest
+    privileged: true
+    security_opt:
+    - "label=disable"
+    environment:
+      - NOBLE_USE_BLUEZ_WITH_DBUS=true
+    user: root
+    volumes:
+    - /var/run/dbus:/var/run/dbus
+    depends_on:
+      - mosquitto
+    networks:
+      - internal
