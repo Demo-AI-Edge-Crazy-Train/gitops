@@ -39,27 +39,24 @@ spec:
         app: intelligent-train
         deployment: intelligent-train
     spec:
+      runtimeClassName: gpu-enabled-class
       containers:
       - image: {{ template "intelligentTrain.image" . }}
         imagePullPolicy: {{ .Values.intelligentTrain.image.pullPolicy | quote }}
         name: intelligent-train
+        env:
+        - name: NVIDIA_VISIBLE_DEVICES
+          value: nvidia.com/gpu=all
         envFrom:
         - configMapRef:
             name: intelligent-train-env
         ports:
         - containerPort: 8080
           protocol: TCP
-        resources:
-          limits:
-            nvidia.com/gpu: 1 # requesting 1 GPU
         securityContext:
           privileged: true
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
-      tolerations:
-      - key: nvidia.com/gpu
-        operator: Exists
-        effect: NoSchedule
       securityContext:
         runAsUser: 0
         runAsGroup: 0
