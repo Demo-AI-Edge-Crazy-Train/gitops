@@ -8,7 +8,7 @@ data:
   TMP_FOLDER: "/tmp"
   INTERVAL: "100"
   PERIODIC_CAPTURE: "100"
-  LOGGER_LEVEL: "info"
+  LOGGER_LEVEL: "INFO"
   MQTT_BROKER: "tcp://mosquitto:1883"
   MQTT_TOPIC: "train-image"
   SAVE_IMAGE: "false"
