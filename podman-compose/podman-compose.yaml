@@ -86,7 +86,11 @@ services:
     security_opt:
     - "label=disable"
     environment:
+      - MQTT_BROKER_URL=mqtt://mosquitto:1883
       - NOBLE_USE_BLUEZ_WITH_DBUS=true
+      - MQTT_TOPIC=train-command
+      - LEGO_MOTOR_FULL_POWER=80
+      - LEGO_MOTOR_LOW_POWER=70
       - DEBUG=bluez-dbus-bindings,poweredup,technicmediumhub,basehub
     user: root
     volumes:

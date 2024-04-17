@@ -40,7 +40,7 @@ ceqApp:
 trainController:
   image:
     registry: quay.io
-    repository: mouachan/train-controller-arm64
+    repository: demo-ai-edge-crazy-train/train-controller
     tag: latest
     digest: ""
     pullPolicy: Always

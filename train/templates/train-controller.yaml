@@ -5,6 +5,11 @@ metadata:
   namespace: {{ .Values.global.namespace | quote }}
 data:
   NOBLE_USE_BLUEZ_WITH_DBUS: "true"
+  MQTT_BROKER_URL: mqtt://mosquitto:1883
+  MQTT_TOPIC: train-command
+  LEGO_MOTOR_FULL_POWER: "80"
+  LEGO_MOTOR_LOW_POWER: "65"
+  # DEBUG: bluez-dbus-bindings,poweredup,technicmediumhub,basehub
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -25,10 +30,7 @@ spec:
     matchLabels:
       app: train-controller
   strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-    type: RollingUpdate
+    type: Recreate
   template:
     metadata:
       labels:
