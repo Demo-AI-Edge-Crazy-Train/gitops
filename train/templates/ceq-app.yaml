@@ -13,7 +13,10 @@ data:
   MQTT_SRC_TOPIC_NAME: "train-model-result"
   MQTT_DEST_TOPIC_NAM: "train-command"
   KAFKA_TOPIC_NAME: "train-monitoring"
+  KAFKA_TOPIC_CAPTURE_NAME: "train-command-capture"
+  TRAIN_HTTP_URL: "capture-service/capture"
   LOGGER_LEVEL: "INFO"
+  LOGGER_LEVEL_CATEGORY_CAMEL: "INFO"
 ---
 apiVersion: apps/v1
 kind: Deployment

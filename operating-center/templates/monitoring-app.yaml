@@ -76,8 +76,10 @@ spec:
             secretKeyRef:
               name: monitoring
               key: sasl.jaas.config
-        - name: KAFKA_TOPIC_NAME
+        - name: KAFKA_TOPIC_MONITORING_NAME
           value: train-monitoring
+        - name: KAFKA_TOPIC_COMMAND_CAPTURE_NAME
+          value: train-command-capture      
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         resources:
