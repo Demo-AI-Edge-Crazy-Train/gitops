@@ -9,7 +9,9 @@ data:
   MQTT_TOPIC: train-command
   LEGO_MOTOR_FULL_POWER: "80"
   LEGO_MOTOR_LOW_POWER: "65"
-  # DEBUG: bluez-dbus-bindings,poweredup,technicmediumhub,basehub
+  LEGO_SLEEP_TIME: "1000"
+  LEGO_RAMPUP_TIME: "2000"
+  # DEBUG: train-controller,bluez-dbus-bindings,poweredup,technicmediumhub,basehub
 ---
 apiVersion: apps/v1
 kind: Deployment
