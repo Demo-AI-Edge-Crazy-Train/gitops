@@ -10,7 +10,7 @@ data:
   LEGO_MOTOR_FULL_POWER: "80"
   LEGO_MOTOR_LOW_POWER: "65"
   LEGO_SLEEP_TIME: "1000"
-  LEGO_RAMPUP_TIME: "2000"
+  LEGO_RAMPUP_TIME: "4000"
   # DEBUG: train-controller,bluez-dbus-bindings,poweredup,technicmediumhub,basehub
 ---
 apiVersion: apps/v1
