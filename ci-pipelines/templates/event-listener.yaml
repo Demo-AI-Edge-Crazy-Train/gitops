@@ -2,6 +2,7 @@ apiVersion: triggers.tekton.dev/v1beta1
 kind: EventListener
 metadata:
   name: crazy-train
+  namespace: {{ .Values.namespace | quote }}
 spec:
   serviceAccountName: buildbot
   triggers:
@@ -15,6 +16,7 @@ kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
   name: el-crazy-train
+  namespace: {{ .Values.namespace | quote }}
   labels:
     app.kubernetes.io/managed-by: EventListener
     app.kubernetes.io/part-of: Triggers

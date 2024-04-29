@@ -2,6 +2,7 @@ apiVersion: triggers.tekton.dev/v1beta1
 kind: Trigger
 metadata:
   name: train-controller
+  namespace: {{ .Values.namespace | quote }}
 spec:
   serviceAccountName: buildbot
   interceptors:
@@ -43,6 +44,7 @@ apiVersion: triggers.tekton.dev/v1beta1
 kind: Trigger
 metadata:
   name: intelligent-train
+  namespace: {{ .Values.namespace | quote }}
 spec:
   serviceAccountName: buildbot
   interceptors:
@@ -84,6 +86,7 @@ apiVersion: triggers.tekton.dev/v1beta1
 kind: Trigger
 metadata:
   name: train-ceq-app
+  namespace: {{ .Values.namespace | quote }}
 spec:
   serviceAccountName: buildbot
   interceptors:
@@ -125,6 +128,7 @@ apiVersion: triggers.tekton.dev/v1beta1
 kind: Trigger
 metadata:
   name: train-monitoring-app
+  namespace: {{ .Values.namespace | quote }}
 spec:
   serviceAccountName: buildbot
   interceptors:
@@ -166,6 +170,7 @@ apiVersion: triggers.tekton.dev/v1beta1
 kind: Trigger
 metadata:
   name: train-capture-image-app
+  namespace: {{ .Values.namespace | quote }}
 spec:
   serviceAccountName: buildbot
   interceptors:

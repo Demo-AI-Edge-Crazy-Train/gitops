@@ -10,6 +10,9 @@ spec:
     repoURL: https://github.com/Demo-AI-Edge-Crazy-Train/gitops.git
     targetRevision: main
     path: ci-pipelines
+    helm:
+      valuesObject:
+        namespace: ci-pipelines
   destination:
     server: https://kubernetes.default.svc
     namespace: ci-pipelines
