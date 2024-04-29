@@ -1,0 +1,204 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: Trigger
+metadata:
+  name: train-controller
+spec:
+  serviceAccountName: buildbot
+  interceptors:
+  - name: GitHub push events
+    ref:
+      name: "github"
+    params:
+      - name: "secretRef"
+        value:
+          secretName: github-webhook-secret
+          secretKey: secretToken
+      - name: "eventTypes"
+        value: ["push"]
+  - name: Filter on repository name
+    ref:
+      name: "cel"
+      kind: ClusterInterceptor
+      apiVersion: triggers.tekton.dev
+    params:
+    - name: filter
+      value: body.repository.full_name == 'Demo-AI-Edge-Crazy-Train/train-controller'
+  bindings:
+  - name: name
+    value: train-controller
+  - name: git-url
+    value: $(body.repository.clone_url)
+  - name: git-revision
+    value: $(body.head_commit.id)
+  - name: image-name
+    value: quay.io/demo-ai-edge-crazy-train/train-controller
+  - name: context-dir
+    value: .
+  - name: containerfile-path
+    value: Containerfile
+  template:
+    ref: nodejs-multiarch
+---
+apiVersion: triggers.tekton.dev/v1beta1
+kind: Trigger
+metadata:
+  name: intelligent-train
+spec:
+  serviceAccountName: buildbot
+  interceptors:
+  - name: GitHub push events
+    ref:
+      name: "github"
+    params:
+      - name: "secretRef"
+        value:
+          secretName: github-webhook-secret
+          secretKey: secretToken
+      - name: "eventTypes"
+        value: ["push"]
+  - name: Filter on repository name
+    ref:
+      name: "cel"
+      kind: ClusterInterceptor
+      apiVersion: triggers.tekton.dev
+    params:
+    - name: filter
+      value: body.repository.full_name == 'Demo-AI-Edge-Crazy-Train/intelligent-train'
+  bindings:
+  - name: name
+    value: intelligent-train
+  - name: git-url
+    value: $(body.repository.clone_url)
+  - name: git-revision
+    value: $(body.head_commit.id)
+  - name: image-name
+    value: quay.io/demo-ai-edge-crazy-train/intelligent-train
+  - name: context-dir
+    value: .
+  - name: containerfile-path
+    value: docker/Dockerfile
+  template:
+    ref: buildah-aarch64
+---
+apiVersion: triggers.tekton.dev/v1beta1
+kind: Trigger
+metadata:
+  name: train-ceq-app
+spec:
+  serviceAccountName: buildbot
+  interceptors:
+  - name: GitHub push events
+    ref:
+      name: "github"
+    params:
+      - name: "secretRef"
+        value:
+          secretName: github-webhook-secret
+          secretKey: secretToken
+      - name: "eventTypes"
+        value: ["push"]
+  - name: Filter on repository name
+    ref:
+      name: "cel"
+      kind: ClusterInterceptor
+      apiVersion: triggers.tekton.dev
+    params:
+    - name: filter
+      value: body.repository.full_name == 'Demo-AI-Edge-Crazy-Train/train-ceq-app'
+  bindings:
+  - name: name
+    value: train-ceq-app
+  - name: git-url
+    value: $(body.repository.clone_url)
+  - name: git-revision
+    value: $(body.head_commit.id)
+  - name: image-name
+    value: quay.io/demo-ai-edge-crazy-train/train-ceq-app
+  - name: context-dir
+    value: .
+  - name: containerfile-path
+    value: src/main/docker/Dockerfile.jvm
+  template:
+    ref: quarkus-multiarch
+---
+apiVersion: triggers.tekton.dev/v1beta1
+kind: Trigger
+metadata:
+  name: train-monitoring-app
+spec:
+  serviceAccountName: buildbot
+  interceptors:
+  - name: GitHub push events
+    ref:
+      name: "github"
+    params:
+      - name: "secretRef"
+        value:
+          secretName: github-webhook-secret
+          secretKey: secretToken
+      - name: "eventTypes"
+        value: ["push"]
+  - name: Filter on repository name
+    ref:
+      name: "cel"
+      kind: ClusterInterceptor
+      apiVersion: triggers.tekton.dev
+    params:
+    - name: filter
+      value: body.repository.full_name == 'Demo-AI-Edge-Crazy-Train/train-monitoring-app'
+  bindings:
+  - name: name
+    value: train-monitoring-app
+  - name: git-url
+    value: $(body.repository.clone_url)
+  - name: git-revision
+    value: $(body.head_commit.id)
+  - name: image-name
+    value: quay.io/demo-ai-edge-crazy-train/train-monitoring-app
+  - name: context-dir
+    value: monitoring-app
+  - name: containerfile-path
+    value: monitoring-app/src/main/docker/Dockerfile.jvm
+  template:
+    ref: quarkus-multiarch-with-redhat-repo
+---
+apiVersion: triggers.tekton.dev/v1beta1
+kind: Trigger
+metadata:
+  name: train-capture-image-app
+spec:
+  serviceAccountName: buildbot
+  interceptors:
+  - name: GitHub push events
+    ref:
+      name: "github"
+    params:
+      - name: "secretRef"
+        value:
+          secretName: github-webhook-secret
+          secretKey: secretToken
+      - name: "eventTypes"
+        value: ["push"]
+  - name: Filter on repository name
+    ref:
+      name: "cel"
+      kind: ClusterInterceptor
+      apiVersion: triggers.tekton.dev
+    params:
+    - name: filter
+      value: body.repository.full_name == 'Demo-AI-Edge-Crazy-Train/train-capture-image-app'
+  bindings:
+  - name: name
+    value: train-capture-image-app
+  - name: git-url
+    value: $(body.repository.clone_url)
+  - name: git-revision
+    value: $(body.head_commit.id)
+  - name: image-name
+    value: quay.io/demo-ai-edge-crazy-train/train-capture-image-app
+  - name: context-dir
+    value: capture-app
+  - name: containerfile-path
+    value: capture-app/src/main/docker/Dockerfile.jvm
+  template:
+    ref: quarkus-multiarch

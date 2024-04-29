@@ -1,0 +1,30 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: EventListener
+metadata:
+  name: crazy-train
+spec:
+  serviceAccountName: buildbot
+  triggers:
+    - triggerRef: train-controller
+    - triggerRef: intelligent-train
+    - triggerRef: train-ceq-app
+    - triggerRef: train-monitoring-app
+    - triggerRef: train-capture-image-app
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: el-crazy-train
+  labels:
+    app.kubernetes.io/managed-by: EventListener
+    app.kubernetes.io/part-of: Triggers
+    eventlistener: crazy-train
+spec:
+  to:
+    kind: Service
+    name: el-crazy-train
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  port:
+    targetPort: http-listener

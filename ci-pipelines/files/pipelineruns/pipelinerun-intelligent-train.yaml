@@ -1,0 +1,49 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false
+  generateName: intelligent-train-
+spec:
+  pipelineRef:
+    name: buildah-aarch64
+  params:
+  - name: git-url
+    value: https://github.com/Demo-AI-Edge-Crazy-Train/intelligent-train
+  - name: git-revision
+    value: main
+  - name: image-name
+    value: quay.io/demo-ai-edge-crazy-train/intelligent-train
+  - name: context-dir
+    value: .
+  - name: containerfile-path
+    value: docker/Dockerfile
+  workspaces:
+  - name: oci-images
+    volumeClaimTemplate:
+      spec:
+        storageClassName: efs-csi
+        accessModes:
+        - ReadWriteMany
+        resources:
+          requests:
+            storage: 10Gi
+  - name: source-workspace
+    volumeClaimTemplate:
+      spec:
+        storageClassName: efs-csi
+        accessModes:
+        - ReadWriteMany
+        resources:
+          requests:
+            storage: 1Gi
+  - name: registry-token
+    secret:
+      secretName: quay-authentication
+  taskRunSpecs:
+  - pipelineTaskName: build-aarch64
+    podTemplate:
+      nodeSelector:
+        beta.kubernetes.io/arch: arm64
+  taskRunTemplate:
+    serviceAccountName: buildbot

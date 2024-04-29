@@ -1,0 +1,6 @@
+{{ if .Values.tektonPipelines.createPipelineRuns }}
+{{ range $path, $_ :=  .Files.Glob  "files/pipelineruns/*.yaml" }}
+---
+{{ $.Files.Get $path }}
+{{ end }}
+{{ end }}
