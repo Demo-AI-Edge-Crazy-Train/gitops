@@ -6,7 +6,7 @@ metadata:
 spec:
 
   workspaces:
-  - name: sources
+  - name: source-workspace
   - name: oci-images
   - name: registry-token
 
@@ -38,7 +38,7 @@ spec:
       value: $(params.git-revision)
     workspaces:
     - name: output
-      workspace: sources
+      workspace: source-workspace
       subPath: src-x86_64
 
   - name: clone-repo-aarch64
@@ -52,7 +52,7 @@ spec:
       value: $(params.git-revision)
     workspaces:
     - name: output
-      workspace: sources
+      workspace: source-workspace
       subPath: src-aarch64
 
   - name: npm-install-x86-64
@@ -64,7 +64,7 @@ spec:
       value: $(params.context-dir)
     workspaces:
     - name: source-workspace
-      workspace: sources
+      workspace: source-workspace
       subPath: src-x86_64
 
   - name: npm-install-aarch64
@@ -76,7 +76,7 @@ spec:
       value: $(params.context-dir)
     workspaces:
     - name: source-workspace
-      workspace: sources
+      workspace: source-workspace
       subPath: src-aarch64
 
   - name: build-x86-64
@@ -90,7 +90,7 @@ spec:
       value: $(params.containerfile-path)
     workspaces:
     - name: source-workspace
-      workspace: sources
+      workspace: source-workspace
       subPath: src-aarch64
     - name: oci-images
       workspace: oci-images
@@ -106,7 +106,7 @@ spec:
       value: $(params.containerfile-path)
     workspaces:
     - name: source-workspace
-      workspace: sources
+      workspace: source-workspace
       subPath: src-aarch64
     - name: oci-images
       workspace: oci-images
