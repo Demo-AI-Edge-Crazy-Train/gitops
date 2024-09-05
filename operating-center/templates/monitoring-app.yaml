@@ -53,6 +53,9 @@ spec:
         app: monitoring-app
         deployment: monitoring-app
     spec:
+      tolerations:
+        - key: emea-open-demo.redhat.com/arm64-architecture
+          effect: NoSchedule
       nodeSelector:
         kubernetes.io/arch: arm64
       containers:
