@@ -45,5 +45,9 @@ spec:
     podTemplate:
       nodeSelector:
         beta.kubernetes.io/arch: arm64
+      tolerations:
+      - key: "emea-open-demo.redhat.com/arm64-architecture"
+        operator: "Exists"
+        effect: "NoSchedule"
   taskRunTemplate:
     serviceAccountName: buildbot

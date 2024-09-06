@@ -43,21 +43,21 @@ spec:
   - name: maven-settings
     emptyDir: {}
   taskRunSpecs:
-  - pipelineTaskName: maven-package-x86-64
-    podTemplate:
-      nodeSelector:
-        beta.kubernetes.io/arch: amd64
   - pipelineTaskName: maven-package-aarch64
     podTemplate:
       nodeSelector:
         beta.kubernetes.io/arch: arm64
-  - pipelineTaskName: build-x86-64
-    podTemplate:
-      nodeSelector:
-        beta.kubernetes.io/arch: amd64
+      tolerations:
+      - key: "emea-open-demo.redhat.com/arm64-architecture"
+        operator: "Exists"
+        effect: "NoSchedule"
   - pipelineTaskName: build-aarch64
     podTemplate:
       nodeSelector:
         beta.kubernetes.io/arch: arm64
+      tolerations:
+      - key: "emea-open-demo.redhat.com/arm64-architecture"
+        operator: "Exists"
+        effect: "NoSchedule"
   taskRunTemplate:
     serviceAccountName: buildbot
