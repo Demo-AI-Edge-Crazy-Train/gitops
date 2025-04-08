@@ -10,7 +10,7 @@ spec:
       transaction.state.log.min.isr: 2
       default.replication.factor: 3
       min.insync.replicas: 2
-      inter.broker.protocol.version: '3.7.0'
+      inter.broker.protocol.version: '3.8.0'
       replica.fetch.max.bytes: 3145728
       message.max.bytes: 3145728
     storage:
@@ -34,7 +34,7 @@ spec:
         port: 9094
         type: loadbalancer
         tls: false
-    version: 3.7.0
+    version: 3.8.0
     replicas: 3
   entityOperator:
     topicOperator: {}
