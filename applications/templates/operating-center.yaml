@@ -17,7 +17,7 @@ spec:
     syncOptions:
     - CreateNamespace=false
     automated:
-      selfHeal: false
+      selfHeal: true
       prune: false
     managedNamespaceMetadata:
       labels:

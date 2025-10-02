@@ -12,7 +12,8 @@ spec:
   storage:
     type: ephemeral
     volumes:
-    - type: ephemeral
+    - id: 0
+      type: ephemeral
       sizeLimit: 10Gi
       kraftMetadata: "shared"
 ---
