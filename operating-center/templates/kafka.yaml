@@ -35,7 +35,7 @@ spec:
         type: loadbalancer
         tls: false
     version: 3.9.0
-    metadataVersion: 3.9
+    metadataVersion: '3.9'
     replicas: 3
   entityOperator:
     topicOperator: {}
