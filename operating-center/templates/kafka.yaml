@@ -13,7 +13,6 @@ spec:
       transaction.state.log.min.isr: 2
       default.replication.factor: 3
       min.insync.replicas: 2
-      inter.broker.protocol.version: '3.9.0'
       replica.fetch.max.bytes: 3145728
       message.max.bytes: 3145728
       auto.create.topics.enable: true
