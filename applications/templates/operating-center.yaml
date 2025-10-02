@@ -22,4 +22,8 @@ spec:
     managedNamespaceMetadata:
       labels:
         argocd.argoproj.io/managed-by: openshift-gitops
+    resourceExclusions:
+      - apiGroup: ''
+        kind: 'PersistentVolumeClaim'
+        name: 'data-*'
 {{ end }}

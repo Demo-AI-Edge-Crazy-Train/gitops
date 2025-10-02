@@ -16,6 +16,7 @@ spec:
       inter.broker.protocol.version: '3.9.0'
       replica.fetch.max.bytes: 3145728
       message.max.bytes: 3145728
+      auto.create.topics.enable: true
     listeners:
       - authentication:
           type: scram-sha-512
@@ -39,6 +40,8 @@ spec:
         tls: false
     version: 4.0.0
     metadataVersion: '4.0'
+    rack:
+      topologyKey: topology.kubernetes.io/zone
   entityOperator:
     topicOperator: {}
     userOperator: {}
@@ -46,7 +49,7 @@ spec:
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaNodePool
 metadata:
-  name: operating-center
+  name: default-pool
   labels:
     strimzi.io/cluster: operating-center
 spec:
