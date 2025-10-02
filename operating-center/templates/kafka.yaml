@@ -13,8 +13,6 @@ spec:
       inter.broker.protocol.version: '3.9.0'
       replica.fetch.max.bytes: 3145728
       message.max.bytes: 3145728
-    storage:
-      type: ephemeral
     listeners:
       - authentication:
           type: scram-sha-512
@@ -40,10 +38,25 @@ spec:
   entityOperator:
     topicOperator: {}
     userOperator: {}
-  zookeeper:
-    storage:
-      type: ephemeral
-    replicas: 3
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaNodePool
+metadata:
+  name: operating-center
+  labels:
+    strimzi.io/cluster: operating-center
+spec:
+  replicas: 3
+  roles:
+  - controller
+  - broker
+  storage:
+    type: jbod
+    volumes:
+    - id: 0
+      type: persistent-claim
+      size: 100Gi
+      deleteClaim: false
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
