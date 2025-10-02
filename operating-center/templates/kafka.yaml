@@ -2,6 +2,9 @@ apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
   name: operating-center
+  annotations:
+    strimzi.io/node-pools: enabled
+    strimzi.io/kraft: enabled
 spec:
   kafka:
     config:
@@ -34,8 +37,8 @@ spec:
         port: 9094
         type: loadbalancer
         tls: false
-    version: 3.9.0
-    metadataVersion: '3.9'
+    version: 4.0.0
+    metadataVersion: '4.0'
   entityOperator:
     topicOperator: {}
     userOperator: {}
