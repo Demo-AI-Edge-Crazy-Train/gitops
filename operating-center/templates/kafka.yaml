@@ -1,4 +1,22 @@
 apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaNodePool
+metadata:
+  name: default-pool
+  labels:
+    strimzi.io/cluster: operating-center
+spec:
+  replicas: 3
+  roles:
+  - controller
+  - broker
+  storage:
+    type: jbod
+    volumes:
+    - type: ephemeral
+      size: 10Gi
+      kraftMetadata: "shared"
+---
+apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
   name: operating-center
@@ -44,25 +62,6 @@ spec:
   entityOperator:
     topicOperator: {}
     userOperator: {}
----
-apiVersion: kafka.strimzi.io/v1beta2
-kind: KafkaNodePool
-metadata:
-  name: default-pool
-  labels:
-    strimzi.io/cluster: operating-center
-spec:
-  replicas: 3
-  roles:
-  - controller
-  - broker
-  storage:
-    type: jbod
-    volumes:
-    - id: 0
-      type: persistent-claim
-      size: 100Gi
-      deleteClaim: false
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
