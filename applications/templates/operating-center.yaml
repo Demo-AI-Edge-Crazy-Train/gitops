@@ -22,8 +22,4 @@ spec:
     managedNamespaceMetadata:
       labels:
         argocd.argoproj.io/managed-by: openshift-gitops
-  ignoreDifferences:
-  - group: ""
-    kind: PersistentVolumeClaim
-    name: data-*-operating-center-default-pool-*
 {{ end }}

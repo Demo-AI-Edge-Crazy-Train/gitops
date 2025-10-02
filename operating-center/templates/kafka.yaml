@@ -10,10 +10,10 @@ spec:
   - controller
   - broker
   storage:
-    type: jbod
+    type: ephemeral
     volumes:
     - type: ephemeral
-      size: 10Gi
+      sizeLimit: 10Gi
       kraftMetadata: "shared"
 ---
 apiVersion: kafka.strimzi.io/v1beta2
