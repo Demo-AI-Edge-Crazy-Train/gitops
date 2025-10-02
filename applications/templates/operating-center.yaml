@@ -17,7 +17,8 @@ spec:
     syncOptions:
     - CreateNamespace=false
     automated:
-      selfHeal: false
+      selfHeal: true
+      # TODO: handle Strimzi extraneous resources
       prune: false
     managedNamespaceMetadata:
       labels:
