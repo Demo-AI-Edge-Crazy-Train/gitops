@@ -20,6 +20,8 @@ spec:
         port: 9092
         type: internal
         tls: false
+        configuration:
+          useServiceDnsDomain: true
       - authentication:
           type: scram-sha-512
         name: tls
@@ -34,7 +36,6 @@ spec:
         tls: false
     version: 3.9.0
     metadataVersion: '3.9'
-    replicas: 3
   entityOperator:
     topicOperator: {}
     userOperator: {}
