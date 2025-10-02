@@ -11,11 +11,6 @@ spec:
   - broker
   storage:
     type: ephemeral
-    volumes:
-    - id: 0
-      type: ephemeral
-      sizeLimit: 10Gi
-      kraftMetadata: "shared"
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
