@@ -12,7 +12,7 @@ helm template foo .  --set kafkaBroker.username=train --set kafkaBroker.password
 Start the capture.
 
 ```sh
-oc -n train rsh deploy/capture-app curl -v http://localhost:8080/capture/start
+oc -n train rsh deploy/capture-app curl -X POST -v http://localhost:8080/capture/start
 ```
 
 Start the train controller.
@@ -26,7 +26,7 @@ oc -n train scale deploy/train-controller --replicas=1
 Stop the capture.
 
 ```sh
-oc -n train rsh deploy/capture-app curl -v http://localhost:8080/capture/stop
+oc -n train rsh deploy/capture-app curl -X POST -v http://localhost:8080/capture/stop
 ```
 
 Stop the train controller.
