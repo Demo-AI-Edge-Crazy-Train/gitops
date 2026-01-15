@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: monitoring-app
+  namespace: train
+  labels:
+    app: monitoring-app
+    app.kubernetes.io/name: monitoring-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: monitoring-app
+  template:
+    metadata:
+      labels:
+        app: monitoring-app
+    spec:
+      containers:
+        - name: monitoring-app
+          image: quay.io/mouachan/train-monitoring-app-arm64:latest
+          imagePullPolicy: Always
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: kafkaserver:9092
+            - name: KAFKA_TOPIC_MONITORING_NAME
+              value: train-monitoring
+            - name: KAFKA_TOPIC_COMMAND_CAPTURE_NAME
+              value: train-command-capture
+            - name: BATCH_SIZE
+              value: "0"
+            - name: LINGER_MS
+              value: "0"
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+            - containerPort: 8443
+              protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 512Mi
