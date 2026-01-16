@@ -35,3 +35,16 @@ Return the proper trainController image name
 {{ include "common.images.image" (dict "imageRoot" .Values.trainController.image "global" .Values.global) }}
 {{- end -}}
 
+{{/*
+Return the proper monitoringApp image name
+*/}}
+{{- define "monitoringApp.image" -}}
+{{ include "common.images.image" (dict "imageRoot" .Values.monitoringApp.image "global" .Values.global) }}
+{{- end -}}
+
+{{/*
+Return the proper kafka image name
+*/}}
+{{- define "kafka.image" -}}
+{{ include "common.images.image" (dict "imageRoot" .Values.kafka.image "global" .Values.global) }}
+{{- end -}}

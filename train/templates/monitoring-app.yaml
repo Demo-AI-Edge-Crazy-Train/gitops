@@ -1,8 +1,9 @@
+{{- if .Values.monitoringApp.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: monitoring-app
-  namespace: train
+  namespace: {{ .Values.global.namespace | quote }}
   labels:
     app: monitoring-app
     app.kubernetes.io/name: monitoring-app
@@ -18,11 +19,11 @@ spec:
     spec:
       containers:
         - name: monitoring-app
-          image: quay.io/mouachan/train-monitoring-app-arm64:latest
-          imagePullPolicy: Always
+          image: {{ template "monitoringApp.image" . }}
+          imagePullPolicy: {{ .Values.monitoringApp.image.pullPolicy | quote }}
           env:
             - name: KAFKA_BOOTSTRAP_SERVERS
-              value: kafkaserver:9092
+              value: kafka.{{ .Values.global.namespace }}.svc.cluster.local:9094
             - name: KAFKA_TOPIC_MONITORING_NAME
               value: train-monitoring
             - name: KAFKA_TOPIC_COMMAND_CAPTURE_NAME
@@ -34,9 +35,41 @@ spec:
           ports:
             - containerPort: 8080
               protocol: TCP
-            - containerPort: 8443
-              protocol: TCP
           resources:
             limits:
               cpu: "1"
               memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: monitoring-app
+  namespace: {{ .Values.global.namespace | quote }}
+  labels:
+    app: monitoring-app
+    app.kubernetes.io/name: monitoring-app
+    app.kubernetes.io/part-of: monitoring-app
+spec:
+  selector:
+    app: monitoring-app
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+  type: ClusterIP
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: monitoring-app
+  namespace: {{ .Values.global.namespace | quote }}
+spec:
+  to:
+    kind: Service
+    name: monitoring-app
+    weight: 100
+  port:
+    targetPort: 8080
+  wildcardPolicy: None
+{{- end }}

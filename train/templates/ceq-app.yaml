@@ -7,9 +7,11 @@ data:
   BROKER_MQTT_URL: "tcp://mosquitto:1883"
   KAFKA_BOOTSTRAP_SERVERS: {{ printf "%s:%d" .Values.kafkaBroker.bootstrapNode.hostname (.Values.kafkaBroker.bootstrapNode.port | int64) | quote }}
   BROKER_KAFKA_URL: {{ printf "tcp://%s:%d" .Values.kafkaBroker.bootstrapNode.hostname (.Values.kafkaBroker.bootstrapNode.port | int64) | quote }}
+{{- if and .Values.kafkaBroker.username .Values.kafkaBroker.password }}
   CAMEL_COMPONENT_KAFKA_SECURITY_PROTOCOL: "SASL_PLAINTEXT"
   CAMEL_COMPONENT_KAFKA_SASL_MECHANISM: "SCRAM-SHA-512"
   CAMEL_COMPONENT_KAFKA_SASL_JAAS_CONFIG: {{ printf "org.apache.kafka.common.security.scram.ScramLoginModule required username=%s password=%s;" (squote .Values.kafkaBroker.username) (squote .Values.kafkaBroker.password) | quote }}
+{{- end }}
   MQTT_SRC_TOPIC_NAME: "train-model-result"
   MQTT_DEST_TOPIC_NAM: "train-command"
   KAFKA_TOPIC_NAME: "train-monitoring"

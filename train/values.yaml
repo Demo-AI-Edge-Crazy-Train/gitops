@@ -1,6 +1,6 @@
 kafkaBroker:
   bootstrapNode:
-    hostname: ""
+    hostname: "kafka.train.svc.cluster.local"
     port: 9094
   username: ""
   password: ""
@@ -9,6 +9,22 @@ global:
   imageRegistry: ""
   namespace: "train"
 
+monitoringApp:
+  enabled: true
+  image:
+    registry: quay.io
+    repository: mouachan/train-monitoring-app-arm64
+    tag: latest
+    digest: ""
+    pullPolicy: Always
+kafka:
+  enabled: true
+  image:
+    registry: docker.io
+    repository: apache/kafka
+    tag: "4.1.0"
+    digest: ""
+    pullPolicy: Always
 mosquitto:
   image:
     registry: docker.io
