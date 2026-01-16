@@ -70,6 +70,11 @@ spec:
               mountPath: /etc/kafka/secrets
             - name: tmp
               mountPath: /tmp
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+      serviceAccountName: train
+      serviceAccount: train
       volumes:
         - name: kafka-config
           emptyDir: {}

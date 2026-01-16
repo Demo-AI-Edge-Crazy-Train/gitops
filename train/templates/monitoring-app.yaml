@@ -39,6 +39,8 @@ spec:
             limits:
               cpu: "1"
               memory: 512Mi
+      serviceAccountName: train
+      serviceAccount: train
 ---
 apiVersion: v1
 kind: Service
