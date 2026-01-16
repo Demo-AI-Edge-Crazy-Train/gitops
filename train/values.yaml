@@ -10,7 +10,7 @@ global:
   namespace: "train"
 
 monitoringApp:
-  enabled: true
+  enabled: false
   image:
     registry: quay.io
     repository: mouachan/train-monitoring-app-arm64
@@ -18,7 +18,7 @@ monitoringApp:
     digest: ""
     pullPolicy: Always
 kafka:
-  enabled: true
+  enabled: false
   image:
     registry: docker.io
     repository: apache/kafka
